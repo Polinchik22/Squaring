@@ -3,38 +3,47 @@
 #include <math.h>
 
 
-enum AmountSolutions {INITIALIZATION = -2,
-                      PROBLEM,
-                      NO_SOLUTIONS,
-                      ONE_SOLUTION,
-                      TWO_SOLUTIONS,
-                      INFINITY_SOLUTIONS};
+// enum AmountSolutions {INITIALIZATION = -2,
+//                       PROBLEM,
+//                       NO_SOLUTIONS,
+//                       ONE_SOLUTION,
+//                       TWO_SOLUTIONS,
+//                       INFINITY_SOLUTIONS};
+//
+// const float EPSILON      = 1e-6f;
+const int   AMOUNT_TESTS = 4;
+//
+//
+// struct Equation{
+//     float coef_2, coef_1, coef_0;
+//     float solution_1, solution_2;
+//     AmountSolutions amount_solution;
+// };
 
-const float EPSILON = 1e-6f;
 
-
-struct Equation{
-    float coef_2, coef_1, coef_0;
-    float solution_1, solution_2;
-    AmountSolutions amount_solution;
-};
-
-
-int Running_All_Tests();
+double Running_All_Tests();
 bool Running_Test(Equation Ref_Equation);
 void printing_error(Equation Ref_Equation, Equation Prog_Equation);
 void creating_equation_by_solutions(AmountSolutions amount_solutions, float* coef_2, float* coef_1, float* coef_0, float solution_1, float solution_2);
 
 
-int Running_All_Tests() {
-    Equation Ref_Equation = {.coef_2 = 1, .coef_1 = -5, .coef_0 = 6,
-                             .solution_1 = 3, .solution_2 = 2,
-                             .amount_solution = TWO_SOLUTIONS};
+double Running_All_Tests() {
+    int correct_tests = 0;
+    Equation Ref_Book[AMOUNT_TESTS] = {
+        {.coef_2 = 1, .coef_1 = -5, .coef_0 =  6, .solution_1 =  3  , .solution_2 = 2  , .amount_solution = TWO_SOLUTIONS     },
+        {.coef_2 = 1, .coef_1 =  2, .coef_0 =  1, .solution_1 = -1  , .solution_2 = 1  , .amount_solution = ONE_SOLUTION      },
+        {.coef_2 = 1, .coef_1 =  0, .coef_0 =  1, .solution_1 =  1  , .solution_2 = NAN, .amount_solution = NO_SOLUTIONS      },
+        {.coef_2 = 0, .coef_1 =  0, .coef_0 =  0, .solution_1 =  NAN, .solution_2 = NAN, .amount_solution = INFINITY_SOLUTIONS}
+    };
 
+    for (int i = 0; i < AMOUNT_TESTS; i++){
+        Equation Ref_Equation = Ref_Book[i];
 
-    bool is_correct = Running_Test(Ref_Equation);
+        correct_tests += Running_Test(Ref_Equation);
 
-    return (int)is_correct;
+    }
+
+    return 100.0 * correct_tests / AMOUNT_TESTS;
 }
 
 bool Running_Test(Equation Ref_Equation){
@@ -49,6 +58,7 @@ bool Running_Test(Equation Ref_Equation){
         printing_error(Ref_Equation, Prog_Equation);
         return false;
     }
+
     return true;
 }
 
