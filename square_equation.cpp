@@ -3,56 +3,71 @@
 #include <math.h>
 
 
-enum AmountSolutions {INITIALIZATION = -2, PROBLEM, NO_SOLUTIONS, ONE_SOLUTION, TWO_SOLUTIONS, INFINITY_SOLUTIONS};
+enum AmountSolutions {INITIALIZATION = -2,
+                      PROBLEM,
+                      NO_SOLUTIONS,
+                      ONE_SOLUTION,
+                      TWO_SOLUTIONS,
+                      INFINITY_SOLUTIONS};
+
 const float EPSILON = 1e-6f;
-
-
-void entering_coefs     (float* coef_2, float* coef_1, float* coef_0);
-void entering           (float* coef, char litera);
-bool is_correct_entering(float* coef, char litera);
-
-AmountSolutions solving_equation(float coef_2, float coef_1, float coef_0, float* solution_1, float* solution_2);
-AmountSolutions solving_eq_deg2 (float coef_2, float coef_1, float coef_0, float* solution_1, float* solution_2);
-float finding_desc              (float coef_2, float coef_1, float coef_0);
-AmountSolutions solving_eq_deg1 (float coef_1, float coef_0, float* solution_1);
-
-void printing_solutions(AmountSolutions amount_solution, float coef_2, float coef_1, float coef_0, float solution_1, float solution_2);
-
-bool is_equal(float coef_2, float coef_1);
-bool cleaning_buffer();
 
 
 struct Equation{
     float coef_2, coef_1, coef_0;
     float solution_1, solution_2;
-    int amount_solution;
+    AmountSolutions amount_solution;
 };
 
 
-// int main() {
-//     float coef_2 = NAN, coef_1 = NAN, coef_0 = NAN;
-//     float solution_1 = NAN, solution_2 = NAN;
-//
-//     //  equation problem_book[100];
-//
-//     entering_coefs(&coef_2, &coef_1, &coef_0);
-//
-//     AmountSolutions amount_solution = solving_equation(coef_2, coef_1, coef_0, &solution_1, &solution_2);
-//
-//     printing_solutions(amount_solution, coef_2, coef_1, coef_0, solution_1, solution_2);
-//
-//     // int i = 0;
-//     // printf("Хотите внесу в задачник? [Y/N] ");
-//     // if (getchar() == 'Y'){
-//     //     problem_book[i].coef_2 = coef_2;
-//     //     problem_book[i].coef_1 = coef_1;
-//     //     problem_book[i].coef_0 = coef_0;
-//     //     problem_book[i].solution_1 = solution_1;
-//     //     problem_book[i].solution_2 = solution_2;
-//     //     problem_book[i].amount_solution = amount_solution;
-//     //     i++;
-//     // }
-// }
+void entering_coefs              (float* coef_2, float* coef_1, float* coef_0);
+void entering                    (float* coef, char litera);
+bool is_correct_entering         (float* coef, char litera);
+
+AmountSolutions solving_equation (float coef_2, float coef_1, float coef_0, float* solution_1, float* solution_2);
+AmountSolutions solving_eq_deg2  (float coef_2, float coef_1, float coef_0, float* solution_1, float* solution_2);
+float finding_desc               (float coef_2, float coef_1, float coef_0);
+AmountSolutions solving_eq_deg1  (float coef_1, float coef_0, float* solution_1);
+
+void printing_solutions          (Equation Sq_Equation);
+
+bool is_equal                    (float coef_2, float coef_1);
+bool cleaning_buffer             ();
+
+
+int main() {
+    // float coef_2 = NAN, coef_1 = NAN, coef_0 = NAN;
+    // float solution_1 = NAN, solution_2 = NAN;
+
+    Equation SqEquation = {.coef_2 = NAN, .coef_1 = NAN, .coef_0 = NAN,
+                           .solution_1 = NAN, .solution_2 = NAN,
+                           .amount_solution = INITIALIZATION};
+
+    //  equation problem_book[100];
+
+    entering_coefs(&SqEquation.coef_2, &SqEquation.coef_1, &SqEquation.coef_0);
+
+    SqEquation.amount_solution = solving_equation(SqEquation.coef_2, SqEquation.coef_1, SqEquation.coef_0, &SqEquation.solution_1, &SqEquation.solution_2);
+
+    printing_solutions(SqEquation);
+
+
+    // int i = 0;
+    // printf("Хотите внесу в задачник? [Y/N] ");
+    // if (getchar() == 'Y'){
+    //     problem_book[i] = {
+    //     .coef_2 = coef_2;
+    //     .coef_1 = coef_1;
+    //     .coef_0 = coef_0;
+    //     .solution_1 = solution_1;
+    //     .solution_2 = solution_2;
+    //     .amount_solution = amount_solution;
+    //      }
+
+    //     i++;
+    // }
+
+}
 
 
 void entering_coefs(float* coef_2, float* coef_1, float* coef_0) {
@@ -63,24 +78,37 @@ void entering_coefs(float* coef_2, float* coef_1, float* coef_0) {
     entering(coef_0, 'c');
 }
 
+// void плохо - небезопасно, подумать
+// void entering(float* coef, char litera) {
+//     while (!is_correct_entering(coef, litera)) {
+//         printf("ЧУВААААК, давай без приколов, ");
+//     }
+// }
+//
+//
+// bool is_correct_entering(float* coef, char litera) {
+//     printf("введи коэффициент %c: ", litera);
+//
+//     int amount_scan_numbs = scanf("%f", coef);
+//     bool is_clean_buffer = cleaning_buffer();
+//
+//     if (amount_scan_numbs != 1 || !(is_clean_buffer)){
+//         return false;
+//     }
+//     return true;
+// }
 
-void entering(float* coef, char litera) {
-    while (!is_correct_entering(coef, litera)) {
-        printf("ЧУВААААК, давай без приколов, ");
-    }
-}
 
-
-bool is_correct_entering(float* coef, char litera) {
+void entering(float* coef, char litera){
     printf("введи коэффициент %c: ", litera);
-
-    int amount_scan_numbs = scanf("%f", coef);
-    bool is_clean_buffer = cleaning_buffer();
-
-    if (amount_scan_numbs != 1 || !(is_clean_buffer)){
-        return false;
+    bool amount = 0;
+    while ((amount = scanf("%f", coef)) != 1 || cleaning_buffer() == false){
+        if (amount == 0){
+            cleaning_buffer();
+        }
+        printf("ЧУВААААК, давай без приколов, введи коэффициент %c: ", litera);
     }
-    return true;
+
 }
 
 
@@ -108,7 +136,7 @@ AmountSolutions solving_eq_deg2(float coef_2, float coef_1, float coef_0, float*
     assert(isfinite(coef_2));
     assert(isfinite(coef_1));
     assert(isfinite(coef_0));
-    assert(solution_1 != NULL);
+    assert(solution_1);
     assert(solution_2 != NULL);
 
     float desc = finding_desc(coef_2, coef_1, coef_0);
@@ -138,6 +166,7 @@ float finding_desc(float coef_2, float coef_1, float coef_0) {
     assert(isfinite(coef_2));
     assert(isfinite(coef_1));
     assert(isfinite(coef_0));
+
     return (coef_1 * coef_1) - (4 * coef_2 * coef_0);
 
 }
@@ -147,6 +176,7 @@ AmountSolutions solving_eq_deg1(float coef_1, float coef_0, float* solution_1) {
     assert(isfinite(coef_1));
     assert(isfinite(coef_0));
     assert(solution_1 != NULL);
+
     if (is_equal(coef_1, 0) && is_equal(coef_0, 0)){
         return INFINITY_SOLUTIONS; /*при max степени уравнения n <= n корней*/
 
@@ -161,34 +191,34 @@ AmountSolutions solving_eq_deg1(float coef_1, float coef_0, float* solution_1) {
 }
 
 
-void printing_solutions(AmountSolutions amount_solution, float coef_2, float coef_1, float coef_0, float solution_1, float solution_2) {
-    switch(amount_solution){
+void printing_solutions(Equation SqEquation) {
+    switch(SqEquation.amount_solution){
             case (PROBLEM):
                 printf("ПРОИЗОШЛА ОШИБКА/n");
                 break;
 
             case (NO_SOLUTIONS):
-                printf("┐(￣ヘ￣)┌ У уравнения %.2lfx^2 + %.2lfx + %.2lf = 0 нет решений\n", coef_2, coef_1, coef_0);
+                printf("┐(￣ヘ￣)┌ У уравнения %.2lfx^2 + %.2lfx + %.2lf = 0 нет решений\n", SqEquation.coef_2, SqEquation.coef_1, SqEquation.coef_0);
                 break;
 
             case (ONE_SOLUTION):
                 printf("(＾▽＾) У уравнения %.2lfx^2 + %.2lfx + %.2lf = 0 \n"
-                       "1 корень: %.2lf\n", coef_2, coef_1, coef_0, solution_1);
+                       "1 корень: %.2lf\n", SqEquation.coef_2, SqEquation.coef_1, SqEquation.coef_0, SqEquation.solution_1);
                 break;
 
             case (TWO_SOLUTIONS):
                 printf("(o˘◡˘o) У уравнения %.2lfx^2 + %.2lfx + %.2lf = 0 \n"
-                       "2 корня: %.2lf и %.2lf\n", coef_2, coef_1, coef_0, solution_1, solution_2);
+                       "2 корня: %.2lf и %.2lf\n", SqEquation.coef_2, SqEquation.coef_1, SqEquation.coef_0, SqEquation.solution_1, SqEquation.solution_2);
                 break;
 
             case (INFINITY_SOLUTIONS):
                 printf("(⊙_⊙) У уравнения %.2lfx^2 + %.2lfx + %.2lf = 0 \n"
-                       "бесконечное количество решений\n", coef_2, coef_1, coef_0);
+                       "бесконечное количество решений\n", SqEquation.coef_2, SqEquation.coef_1, SqEquation.coef_0);
                 break;
 
-            // default:
-            //     printf("(^_-) ПРОИЗОШЛА ОШИБКА\n");
-            //     break;
+            default:
+                printf("(^_-) ПРОИЗОШЛА ОШИБКА\n");
+                break;
         }
 }
 
@@ -202,14 +232,12 @@ bool is_equal(float a, float b) {
 
 
 bool cleaning_buffer() {
-    char c = getchar();
-
-    while (c != '\n') {
+    char c = 0;
+    while ((c = getchar()) != '\n') {
         if (c != ' '){
             while (getchar() != '\n') {;}
             return false;
         }
-        c = getchar();
     }
     return true;
 }

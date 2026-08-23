@@ -3,50 +3,63 @@
 #include <math.h>
 
 
-int running_tests();
-bool run_test(float coef_2, float coef_1, float coef_0, AmountSolutions amount_solutions, float solution_1, float solution_2);
-void printing_error(float coef_2, float coef_1, float coef_0, AmountSolutions ref_amount_solutions, float ref_solution_1, float ref_solution_2, AmountSolutions e_amount_solutions, float e_solution_1, float e_solution_2);
+enum AmountSolutions {INITIALIZATION = -2,
+                      PROBLEM,
+                      NO_SOLUTIONS,
+                      ONE_SOLUTION,
+                      TWO_SOLUTIONS,
+                      INFINITY_SOLUTIONS};
+
+const float EPSILON = 1e-6f;
+
+
+struct Equation{
+    float coef_2, coef_1, coef_0;
+    float solution_1, solution_2;
+    AmountSolutions amount_solution;
+};
+
+
+int Running_All_Tests();
+bool Running_Test(Equation Ref_Equation);
+void printing_error(Equation Ref_Equation, Equation Prog_Equation);
 void creating_equation_by_solutions(AmountSolutions amount_solutions, float* coef_2, float* coef_1, float* coef_0, float solution_1, float solution_2);
 
 
-int running_tests(){
-    float coef_2 = 1, coef_1 = -5, coef_0 = 6;
-    AmountSolutions ref_amount_solutions =  TWO_SOLUTIONS;
-    float ref_solution_1 = 2, ref_solution_2 = 3;
+int Running_All_Tests() {
+    Equation Ref_Equation = {.coef_2 = 1, .coef_1 = -5, .coef_0 = 6,
+                             .solution_1 = 3, .solution_2 = 2,
+                             .amount_solution = TWO_SOLUTIONS};
 
-    bool is_correct = run_test(coef_2, coef_1, coef_0, ref_amount_solutions, ref_solution_1, ref_solution_2);
 
-    return 0;
+    bool is_correct = Running_Test(Ref_Equation);
+
+    return (int)is_correct;
 }
 
-bool run_test(float coef_2, float coef_1, float coef_0, AmountSolutions ref_amount_solutions, float ref_solution_1, float ref_solution_2){
-    float e_solution_1 = NAN, e_solution_2 = NAN;
-    AmountSolutions e_amount_solutions = solving_equation(coef_2, coef_1, coef_0, &e_solution_1, &e_solution_2);
+bool Running_Test(Equation Ref_Equation){
+    Equation Prog_Equation = {.coef_2 = Ref_Equation.coef_2, .coef_1 = Ref_Equation.coef_1, .coef_0 = Ref_Equation.coef_0,
+                              .solution_1 = NAN, .solution_2 = NAN,
+                              .amount_solution = INITIALIZATION};
 
-    if (e_amount_solutions != ref_amount_solutions){
-        printing_error(coef_2, coef_1, coef_0, ref_amount_solutions, ref_solution_1, ref_solution_2, e_amount_solutions, e_solution_1, e_solution_2);
+
+    Prog_Equation.amount_solution = solving_equation(Ref_Equation.coef_2, Ref_Equation.coef_1, Ref_Equation.coef_0, &Prog_Equation.solution_1, &Prog_Equation.solution_2);
+
+    if (Prog_Equation.amount_solution != Ref_Equation.amount_solution || (is_equal(Ref_Equation.solution_1, Prog_Equation.solution_1) + is_equal(Ref_Equation.solution_2, Prog_Equation.solution_2) != Ref_Equation.amount_solution)) {
+        printing_error(Ref_Equation, Prog_Equation);
         return false;
-    } else {
-        int is_equal_solution_1 = is_equal(ref_solution_1, e_solution_1);
-        int is_equal_solution_2 = is_equal(ref_solution_2, e_solution_2);
-
-        if ((is_equal_solution_1 + is_equal_solution_2) == ref_amount_solutions){
-            return true;
-        } else {
-            printing_error(coef_2, coef_1, coef_0, ref_amount_solutions, ref_solution_1, ref_solution_2, e_amount_solutions, e_solution_1, e_solution_2);
-            return false;
-        }
     }
+    return true;
 }
 
 
-void printing_error(float coef_2, float coef_1, float coef_0, AmountSolutions ref_amount_solutions, float ref_solution_1, float ref_solution_2, AmountSolutions e_amount_solutions, float e_solution_1, float e_solution_2){
+void printing_error(Equation Ref_Equation, Equation Prog_Equation){
     printf("ОШИБКА в решении уравнения: %.2lfx^2 + %.2lfx + %.2lf = 0 \n"
            "Ожидалось  %d решений: первое %5.2lf, второе %5.2lf\n"
            "Получилось %d решений: первое %5.2lf, второе %5.2lf\n",
-           coef_2, coef_1, coef_0,
-           ref_amount_solutions, ref_solution_1, ref_solution_2,
-           e_amount_solutions, e_solution_1, e_solution_2);
+           Ref_Equation.coef_2, Ref_Equation.coef_1, Ref_Equation.coef_0,
+           Ref_Equation.amount_solution, Ref_Equation.solution_1, Ref_Equation.solution_2,
+           Prog_Equation.amount_solution, Prog_Equation.solution_1, Prog_Equation.solution_2);
 }
 
 
