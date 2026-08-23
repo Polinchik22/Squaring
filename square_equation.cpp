@@ -1,73 +1,4 @@
-#include <stdio.h>
-#include <assert.h>
-#include <math.h>
-
-
-enum AmountSolutions {INITIALIZATION = -2,
-                      PROBLEM,
-                      NO_SOLUTIONS,
-                      ONE_SOLUTION,
-                      TWO_SOLUTIONS,
-                      INFINITY_SOLUTIONS};
-
-const float EPSILON = 1e-6f;
-
-
-struct Equation{
-    float coef_2, coef_1, coef_0;
-    float solution_1, solution_2;
-    AmountSolutions amount_solution;
-};
-
-
-bool entering_coefs              (float* coef_2, float* coef_1, float* coef_0);
-bool entering                    (float* coef, char litera);
-bool is_correct_entering         (float* coef, char litera);
-
-AmountSolutions solving_equation (float coef_2, float coef_1, float coef_0, float* solution_1, float* solution_2);
-AmountSolutions solving_eq_deg2  (float coef_2, float coef_1, float coef_0, float* solution_1, float* solution_2);
-float finding_desc               (float coef_2, float coef_1, float coef_0);
-AmountSolutions solving_eq_deg1  (float coef_1, float coef_0, float* solution_1);
-
-bool printing_solutions          (Equation Sq_Equation);
-
-bool is_equal                    (float coef_2, float coef_1);
-bool cleaning_buffer             ();
-
-
-// int main() {
-//     // float coef_2 = NAN, coef_1 = NAN, coef_0 = NAN;
-//     // float solution_1 = NAN, solution_2 = NAN;
-//
-//     Equation SqEquation = {.coef_2 = NAN, .coef_1 = NAN, .coef_0 = NAN,
-//                            .solution_1 = NAN, .solution_2 = NAN,
-//                            .amount_solution = INITIALIZATION};
-//
-//     //  equation problem_book[100];
-//
-//     entering_coefs(&SqEquation.coef_2, &SqEquation.coef_1, &SqEquation.coef_0);
-//
-//     SqEquation.amount_solution = solving_equation(SqEquation.coef_2, SqEquation.coef_1, SqEquation.coef_0, &SqEquation.solution_1, &SqEquation.solution_2);
-//
-//     printing_solutions(SqEquation);
-//
-//
-//     // int i = 0;
-//     // printf("Хотите внесу в задачник? [Y/N] ");
-//     // if (getchar() == 'Y'){
-//     //     problem_book[i] = {
-//     //     .coef_2 = coef_2;
-//     //     .coef_1 = coef_1;
-//     //     .coef_0 = coef_0;
-//     //     .solution_1 = solution_1;
-//     //     .solution_2 = solution_2;
-//     //     .amount_solution = amount_solution;
-//     //      }
-//
-//     //     i++;
-//     // }
-//
-// }
+#include "square_equation.h"
 
 
 bool entering_coefs(float* coef_2, float* coef_1, float* coef_0) {
@@ -95,47 +26,45 @@ bool entering(float* coef, char litera){
 }
 
 
-AmountSolutions solving_equation(float coef_2, float coef_1, float coef_0, float* solution_1, float* solution_2) {
-    assert(isfinite(coef_2));
-    assert(isfinite(coef_1));
-    assert(isfinite(coef_0));
-    assert(solution_1 != NULL);
-    assert(solution_2 != NULL);
+bool solving_equation(Equation* Square_Equation) {
+    assert(isfinite(Square_Equation->coef_2));
+    assert(isfinite(Square_Equation->coef_1));
+    assert(isfinite(Square_Equation->coef_0));
+    assert(&(Square_Equation->solution_1));
+    assert(&(Square_Equation->solution_2));
 
-    AmountSolutions amount_solutions = INITIALIZATION;
-
-    if (is_equal(coef_2, 0)) {
-        amount_solutions = solving_eq_deg1(coef_1, coef_0, solution_1);
+    if (is_equal(Square_Equation->coef_2, 0)) {
+        Square_Equation->amount_solution = solving_eq_deg1(Square_Equation);
 
     } else {
-        amount_solutions = solving_eq_deg2(coef_2, coef_1, coef_0, solution_1, solution_2);
+        Square_Equation->amount_solution = solving_eq_deg2(Square_Equation);
     }
 
-    return amount_solutions;
+    return true;
 }
 
 
-AmountSolutions solving_eq_deg2(float coef_2, float coef_1, float coef_0, float* solution_1, float* solution_2) {
-    assert(isfinite(coef_2));
-    assert(isfinite(coef_1));
-    assert(isfinite(coef_0));
-    assert(solution_1);
-    assert(solution_2 != NULL);
+AmountSolutions solving_eq_deg2(Equation* Square_Equation) {
+    assert(isfinite(Square_Equation->coef_2));
+    assert(isfinite(Square_Equation->coef_1));
+    assert(isfinite(Square_Equation->coef_0));
+    assert(&(Square_Equation->solution_1));
+    assert(&(Square_Equation->solution_2));
 
-    float desc = finding_desc(coef_2, coef_1, coef_0);
+    float desc = finding_desc(Square_Equation->coef_2, Square_Equation->coef_1, Square_Equation->coef_0);
 
     if (desc < 0) {
         return NO_SOLUTIONS;
 
     } else if (is_equal(desc, 0)) {
-        *solution_1 = *solution_2 = -coef_1 / (2 * coef_2);
+        Square_Equation->solution_1 = -Square_Equation->coef_1 / (2 * Square_Equation->coef_2);
         return ONE_SOLUTION;
 
     } else if (desc > 0) {
         float sqr_desc = sqrt(desc);
 
-        *solution_1 = (-coef_1 + sqr_desc) / (2 * coef_2);
-        *solution_2 = (-coef_1 - sqr_desc) / (2 * coef_2);
+        Square_Equation->solution_1 = ( - Square_Equation->coef_1 + sqr_desc) / (2 * Square_Equation->coef_2);
+        Square_Equation->solution_2 = ( - Square_Equation->coef_1 - sqr_desc) / (2 * Square_Equation->coef_2);
         return TWO_SOLUTIONS;
 
     } else {
@@ -155,48 +84,48 @@ float finding_desc(float coef_2, float coef_1, float coef_0) {
 }
 
 
-AmountSolutions solving_eq_deg1(float coef_1, float coef_0, float* solution_1) {
-    assert(isfinite(coef_1));
-    assert(isfinite(coef_0));
-    assert(solution_1 != NULL);
+AmountSolutions solving_eq_deg1(Equation* Lineal_Equation) {
+    assert(isfinite(Lineal_Equation->coef_1));
+    assert(isfinite(Lineal_Equation->coef_0));
+    assert(&(Lineal_Equation->solution_1)); //TODO - спросить есть ли более оптимальная запись
 
-    if (is_equal(coef_1, 0) && is_equal(coef_0, 0)){
-        return INFINITY_SOLUTIONS; /*при max степени уравнения n <= n корней*/
+    if (is_equal(Lineal_Equation->coef_1, 0) && is_equal(Lineal_Equation->coef_0, 0)){
+        return INFINITY_SOLUTIONS;
 
-    } else if (is_equal(coef_1, 0) && !is_equal(coef_0, 0)){
+    } else if (is_equal(Lineal_Equation->coef_1, 0) && !is_equal(Lineal_Equation->coef_0, 0)){
         return NO_SOLUTIONS;
 
     }else{
-        *solution_1 = (-coef_0 / coef_1);
+        Lineal_Equation->solution_1 = (-Lineal_Equation->coef_0 / Lineal_Equation->coef_1);
         return ONE_SOLUTION;
 
     }
 }
 
 
-bool printing_solutions(Equation SqEquation) {
-    switch(SqEquation.amount_solution){
+bool printing_solutions(Equation Square_Equation) {
+    switch(Square_Equation.amount_solution){
             case (PROBLEM):
                 printf("ПРОИЗОШЛА ОШИБКА/n");
                 break;
 
             case (NO_SOLUTIONS):
-                printf("┐(￣ヘ￣)┌ У уравнения %.2lfx^2 + %.2lfx + %.2lf = 0 нет решений\n", SqEquation.coef_2, SqEquation.coef_1, SqEquation.coef_0);
+                printf("┐(￣ヘ￣)┌ У уравнения %.2lfx^2 + %.2lfx + %.2lf = 0 нет решений\n", Square_Equation.coef_2, Square_Equation.coef_1, Square_Equation.coef_0);
                 break;
 
             case (ONE_SOLUTION):
                 printf("(＾▽＾) У уравнения %.2lfx^2 + %.2lfx + %.2lf = 0 \n"
-                       "1 корень: %.2lf\n", SqEquation.coef_2, SqEquation.coef_1, SqEquation.coef_0, SqEquation.solution_1);
+                       "1 корень: %.2lf\n", Square_Equation.coef_2, Square_Equation.coef_1, Square_Equation.coef_0, Square_Equation.solution_1);
                 break;
 
             case (TWO_SOLUTIONS):
                 printf("(o˘◡˘o) У уравнения %.2lfx^2 + %.2lfx + %.2lf = 0 \n"
-                       "2 корня: %.2lf и %.2lf\n", SqEquation.coef_2, SqEquation.coef_1, SqEquation.coef_0, SqEquation.solution_1, SqEquation.solution_2);
+                       "2 корня: %.2lf и %.2lf\n", Square_Equation.coef_2, Square_Equation.coef_1, Square_Equation.coef_0, Square_Equation.solution_1, Square_Equation.solution_2);
                 break;
 
             case (INFINITY_SOLUTIONS):
                 printf("(⊙_⊙) У уравнения %.2lfx^2 + %.2lfx + %.2lf = 0 \n"
-                       "бесконечное количество решений\n", SqEquation.coef_2, SqEquation.coef_1, SqEquation.coef_0);
+                       "бесконечное количество решений\n", Square_Equation.coef_2, Square_Equation.coef_1, Square_Equation.coef_0);
                 break;
 
             default:
@@ -208,10 +137,12 @@ bool printing_solutions(Equation SqEquation) {
 
 
 bool is_equal(float a, float b) {
-    // assert(isfinite(a));
-    // assert(isfinite(b));
+    int amount_nans = isnan(a) + isnan(b);
 
-    return (fabs(a - b) < EPSILON);
+    if (amount_nans < 2) {
+        return (fabs(a - b) < EPSILON);
+    }
+    return true;
 }
 
 
