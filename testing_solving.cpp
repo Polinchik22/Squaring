@@ -19,8 +19,10 @@ double Running_All_Tests() {
         correct_tests += Running_Test(Ref_Equation);
 
     }
+    double accuracy = 100.0 * correct_tests / AMOUNT_TESTS;
 
-    return 100.0 * correct_tests / AMOUNT_TESTS;
+    printf("ПРОЦЕНТ КОРРЕКТНЫХ ТЕСТОВ %.f%% \n", accuracy);
+    return accuracy;
 }
 
 bool Running_Test(Equation Ref_Equation){

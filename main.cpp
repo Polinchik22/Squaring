@@ -2,6 +2,8 @@
 
 #include "square_equation.h"
 #include "testing_solving.h"
+#include "input_output.cpp"
+#include "tehnical_fiches.h"
 
 
 int main() {
@@ -18,5 +20,5 @@ int main() {
 
     printf("\n\n");
 
-    printf("ПРОЦЕНТ КОРРЕКТНЫХ ТЕСТОВ %.f%% \n", Running_All_Tests());
+    Running_All_Tests();
 }
