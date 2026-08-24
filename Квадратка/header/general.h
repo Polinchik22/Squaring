@@ -11,8 +11,7 @@ enum AmountSolutions {INITIALIZATION = -2,
 const float EPSILON      = 1e-6f;
 const int   AMOUNT_TESTS = 6;
 
-
-struct Equation{
+struct Equation {
     float coef_2, coef_1, coef_0;
     float solution_1, solution_2;
     AmountSolutions amount_solution;

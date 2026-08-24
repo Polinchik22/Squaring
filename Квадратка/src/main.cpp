@@ -2,7 +2,7 @@
 
 #include "square_equation.h"
 #include "testing_solving.h"
-#include "input_output.cpp"
+#include "input_output.h"
 #include "tehnical_fiches.h"
 
 

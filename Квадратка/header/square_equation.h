@@ -6,6 +6,7 @@
 #include <math.h>
 
 #include "general.h"
+#include "tehnical_fiches.h"
 
 bool solving_equation            (Equation* Square_Equation);
 AmountSolutions solving_eq_deg2  (Equation* Square_Equation);

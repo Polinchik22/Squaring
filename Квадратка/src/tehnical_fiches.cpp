@@ -17,7 +17,7 @@ bool cleaning_buffer() {
     char c = 0;
     while ((c = getchar()) != '\n') {
         if (c != ' '){
-            while (getchar() != '\n') {;}
+            while (getchar() != '\n');
             return false;
         }
     }

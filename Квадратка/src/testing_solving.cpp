@@ -10,7 +10,6 @@ double Running_All_Tests() {
         {.coef_2 = 1, .coef_1 =  0, .coef_0 =   1, .solution_1 =  NAN, .solution_2 = NAN, .amount_solution = NO_SOLUTIONS      },
         {.coef_2 = 1, .coef_1 =  1, .coef_0 =  23, .solution_1 =  NAN, .solution_2 = NAN, .amount_solution = NO_SOLUTIONS      },
         {.coef_2 = 0, .coef_1 =  0, .coef_0 =   0, .solution_1 =  NAN, .solution_2 = NAN, .amount_solution = INFINITY_SOLUTIONS},
-
     };
 
     for (int i = 0; i < AMOUNT_TESTS; i++){
@@ -32,22 +31,14 @@ bool Running_Test(Equation Ref_Equation){
 
     solving_equation(&Prog_Equation);
 
-    if (Ref_Equation.amount_solution != Prog_Equation.amount_solution || !is_equal(Ref_Equation.solution_1, Prog_Equation.solution_1) || !is_equal(Ref_Equation.solution_2, Prog_Equation.solution_2)) {
+    if (Ref_Equation.amount_solution != Prog_Equation.amount_solution ||
+                !is_equal(Ref_Equation.solution_1, Prog_Equation.solution_1) ||
+                !is_equal(Ref_Equation.solution_2, Prog_Equation.solution_2)) {
         printing_error(Ref_Equation, Prog_Equation);
         return false;
     }
 
     return true;
-}
-
-
-void printing_error(Equation Ref_Equation, Equation Prog_Equation){
-    printf("ОШИБКА в решении уравнения: %.2lfx^2 + %.2lfx + %.2lf = 0 \n"
-           "Ожидалось  %d решений: первое %5.2lf, второе %5.2lf\n"
-           "Получилось %d решений: первое %5.2lf, второе %5.2lf\n",
-           Ref_Equation.coef_2, Ref_Equation.coef_1, Ref_Equation.coef_0,
-           Ref_Equation.amount_solution, Ref_Equation.solution_1, Ref_Equation.solution_2,
-           Prog_Equation.amount_solution, Prog_Equation.solution_1, Prog_Equation.solution_2);
 }
 
 
@@ -57,9 +48,17 @@ void creating_equation_by_solutions(AmountSolutions amount_solutions, float* coe
             *coef_2 = 1;
             *coef_1 = -(solution_1 + solution_2);
             *coef_0 = solution_1 * solution_2;
+            break;
 
         case(ONE_SOLUTION):
             *coef_2 = 0;
             *coef_1 = - solution_1;
+            break;
+
+        default:
+            *coef_2 = 0;
+            *coef_1 = 0;
+            break;
+
     }
 }
