@@ -13,7 +13,6 @@ bool entering_coefs(float* coef_2, float* coef_1, float* coef_0) {
 
     return true;
 }
-//TODO: асерты, разделить на фаилы, защита const, проработать вывод уравнения
 
 
 bool entering(float* coef, char litera){
