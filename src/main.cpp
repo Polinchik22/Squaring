@@ -7,15 +7,19 @@
 
 
 int main() {
-    Equation Square_Equation = {.coef_2 = NAN, .coef_1 = NAN, .coef_0 = NAN,
-                           .solution_1 = NAN, .solution_2 = NAN,
-                           .amount_solution = INITIALIZATION};
+    Equation Square_Equation = {{.coef_2          = NAN,
+                                 .coef_1          = NAN,
+                                 .coef_0          = NAN},
+                                 .solution_1      = NAN,
+                                 .solution_2      = NAN,
+                                 .amount_solution = INITIALIZATION};
 
 
-    entering_coefs(&Square_Equation.coef_2, &Square_Equation.coef_1, &Square_Equation.coef_0);
+    entering_all_coefs(&(Square_Equation.coefficients));
 
     solving_equation(&Square_Equation);
 
+    printing_equation(Square_Equation);
     printing_solutions(Square_Equation);
 
     printf("\n\n");

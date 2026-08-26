@@ -1,12 +1,12 @@
 #include "tehnical_fiches.h"
 
 
-bool is_equal(float a, float b) {
-    // Здесь осознано не пишу асерты, тк может принимать NAN
+bool is_equal(const float a, const float b) {
+    // Здесь осознано не пишу асcерты, тк может принимать NAN
 
     int amount_nans = isnan(a) + isnan(b);
 
-    if (amount_nans < 2) {
+    if (amount_nans < 2) { // todo
         return (fabs(a - b) < EPSILON);
     }
     return true;
@@ -14,12 +14,14 @@ bool is_equal(float a, float b) {
 
 
 bool cleaning_buffer() {
-    char c = 0;
+    int c = 0;
+
     while ((c = getchar()) != '\n') {
         if (c != ' '){
             while (getchar() != '\n');
             return false;
         }
     }
+
     return true;
 }

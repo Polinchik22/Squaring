@@ -1,61 +1,62 @@
 #include "input_output.h"
 
-bool entering_coefs(float* coef_2, float* coef_1, float* coef_0) {
-    assert(coef_2);
-    assert(coef_1);
-    assert(coef_0);
+void entering_all_coefs(Coefficients* Equation_Coefs) {
+    assert(&(Equation_Coefs->coef_2));
+    assert(&(Equation_Coefs->coef_1));
+    assert(&(Equation_Coefs->coef_0));
 
     printf("Привет! будем решать ax^2 + bx + c = 0 \n");
 
-    entering(coef_2, 'a');
-    entering(coef_1, 'b');
-    entering(coef_0, 'c');
-
-    return true;
+    entering_one_coef(&(Equation_Coefs->coef_2), 'a');
+    entering_one_coef(&(Equation_Coefs->coef_1), 'b');
+    entering_one_coef(&(Equation_Coefs->coef_0), 'c');
 }
 
 
-bool entering(float* coef, char litera){
+void entering_one_coef(float* coef, const char litera){ // todo void?
     assert(coef);
-    assert(litera);
 
     printf("введи коэффициент %c: ", litera);
+
     bool amount = 0;
-    while ((amount = scanf("%f", coef)) != 1 || cleaning_buffer() == false){
+    while ((amount = scanf("%f", coef)) != 1 || cleaning_buffer() == false){ // todo
         if (amount == 0){
             cleaning_buffer();
         }
         printf("ЧУВААААК, давай без приколов, введи коэффициент %c: ", litera);
     }
-
-    return true;
 }
 
 
-bool printing_equation(Equation Square_Equation){
-    assert(isfinite(Square_Equation.coef_2));
-    assert(isfinite(Square_Equation.coef_1));
-    assert(isfinite(Square_Equation.coef_0));
+void printing_equation(const Equation Square_Equation){
+    const Coefficients Equation_Coefs = Square_Equation.coefficients;
+
+    assert(isfinite(Equation_Coefs.coef_2));
+    assert(isfinite(Equation_Coefs.coef_1));
+    assert(isfinite(Equation_Coefs.coef_0));
 
     printf("У уравнения: ");
 
     if (Square_Equation.amount_solution == INFINITY_SOLUTIONS){
         printf("0 = 0 \n");
-        return true;
+        return;
     }
 
-    printing_coef(Square_Equation.coef_2, "x^2");
-    printing_coef(Square_Equation.coef_1, "x"  );
-    printing_coef(Square_Equation.coef_0, ""  );
+    printing_coef(Equation_Coefs.coef_2, "x^2");
+    printing_coef(Equation_Coefs.coef_1, "x"  );
+    printing_coef(Equation_Coefs.coef_0, ""  );
 
     printf(" = 0 \n");
-
-    return true;
+    return;
 }
 
-bool printing_coef(const float coef, const char* x_part){
+
+void printing_coef(const float coef, const char* x_part){
+    assert(isfinite(coef));
+    assert(x_part);
+
     if (coef >= 0) {
-        if (x_part != "x^2") {
+        if (strcmp(x_part, "x^2")) {
             printf("+ ");
         }
     } else {
@@ -63,22 +64,19 @@ bool printing_coef(const float coef, const char* x_part){
     }
 
     float abs_coef = fabs(coef);
-        if (is_equal(abs_coef, 0)){
-            printf("0 ");
 
-        } else if (is_equal(abs_coef, 1) && x_part != ""){
-            printf("%s ", x_part);
+    if (is_equal(abs_coef, 0)){
+        printf("0 ");
+    } else if (is_equal(abs_coef, 1) && strcmp(x_part, "")){
+        printf("%s ", x_part);
+    } else {
+        printf("%g%s ", abs_coef, x_part);
+    }
 
-        } else {
-            printf("%g%s ", abs_coef, x_part);
-        }
-
-    return true;
 }
 
 
-bool printing_solutions(Equation Square_Equation) {
-    printing_equation(Square_Equation);
+AmountSolutions printing_solutions(const Equation Square_Equation) {
     switch(Square_Equation.amount_solution){
             case (PROBLEM):
                 printf("ПРОИЗОШЛА ОШИБКА/n");
@@ -97,23 +95,28 @@ bool printing_solutions(Equation Square_Equation) {
                 break;
 
             case (INFINITY_SOLUTIONS):
-                printf("бесконечное количество решений (⊙_⊙)\n");
+                printf("Бесконечное количество решений (⊙_⊙)\n");
                 break;
 
+            case (INITIALIZATION):
             default:
-                printf("(^_-) ПРОИЗОШЛА ОШИБКА\n");
+                printf("ПРОИЗОШЛА ОШИБКА (^_-)\n");
                 break;
         }
-    return true;
+    return Square_Equation.amount_solution;
 }
 
 
-void printing_error(Equation Ref_Equation, Equation Prog_Equation){
-    printf("ОШИБКА в решении уравнения: %.2lfx^2 + %.2lfx + %.2lf = 0 \n"
-           "Ожидалось  %d решений: первое %5.2lf, второе %5.2lf\n"
-           "Получилось %d решений: первое %5.2lf, второе %5.2lf\n",
-           Ref_Equation.coef_2, Ref_Equation.coef_1, Ref_Equation.coef_0,
-           Ref_Equation.amount_solution, Ref_Equation.solution_1, Ref_Equation.solution_2,
-           Prog_Equation.amount_solution, Prog_Equation.solution_1, Prog_Equation.solution_2);
+void printing_error(const Equation Ref_Equation, const Equation Prog_Equation){
+    printf("ОШИБКА \n");
+
+    printing_equation(Ref_Equation);
+
+    printf("Ожидалось  ");
+    printing_solutions(Ref_Equation);
+
+    printf("Получилось ");
+    printing_solutions(Prog_Equation);
 }
+
 
