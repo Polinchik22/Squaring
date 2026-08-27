@@ -25,9 +25,18 @@ struct Equation {
 };
 
 #define BOLD_RED          "\033[1;31m"
+#define RED               "\033[31m"
 #define UNDERLINE_YELLOW  "\033[4;93m"
 #define BOLD_GREEN        "\033[1;32m"
 #define RESET             "\033[0m"
 #define BLUE              "\033[36m"
+
+#define my_assert(statement)                                                                       \
+                if (!statement){                                                                   \
+                    printf(BOLD_RED "Вы жестко ******. (°ロ°) ! \n" RESET                          \
+                           RED      "Конкретнее: в фаиле %s, в функции %s на строчке %d \n" RESET, \
+                            __FILE__, __func__, __LINE__);                                         \
+                abort();                                                                           \
+                }                                                                                  \
 
 #endif //GENERAL_H

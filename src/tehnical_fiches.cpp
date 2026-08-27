@@ -26,5 +26,6 @@ bool cleaning_buffer() {
 
 
 float frand(){
-    return float(rand()) / float(rand());
+    return float(rand()) / float(rand() + 1);
 }
+

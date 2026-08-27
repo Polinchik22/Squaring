@@ -1,7 +1,7 @@
 #include "input_output.h"
 
 void entering_all_coefs(Coefficients* Equation_Coefs) {
-    assert(Equation_Coefs);
+    my_assert(Equation_Coefs);
 
     printf("Привет! будем решать ax^2 + bx + c = 0 \n");
 
@@ -14,7 +14,7 @@ void entering_all_coefs(Coefficients* Equation_Coefs) {
 
 
 void entering_one_coef(float* coef, const char litera){
-    assert(coef);
+    my_assert(coef);
 
     printf("Введи коэффициент %c: ", litera);
 
@@ -31,9 +31,9 @@ void entering_one_coef(float* coef, const char litera){
 void printing_equation(const Equation Square_Equation){
     const Coefficients Equation_Coefs = Square_Equation.coefficients;
 
-    assert(isfinite(Equation_Coefs.coef_2));
-    assert(isfinite(Equation_Coefs.coef_1));
-    assert(isfinite(Equation_Coefs.coef_0));
+    my_assert(isfinite(Equation_Coefs.coef_2));
+    my_assert(isfinite(Equation_Coefs.coef_1));
+    my_assert(isfinite(Equation_Coefs.coef_0));
 
     printf("У уравнения: ");
 
@@ -117,5 +117,10 @@ void printing_error_with_ref(const Equation Ref_Equation, const Equation Prog_Eq
     printf("Получилось ");
     printing_solutions(Prog_Equation);
 }
+
+
+// void painting_function(const Equation Function){
+//     char canvas[20][20];
+// }
 
 

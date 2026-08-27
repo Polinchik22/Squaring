@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "square_equation.h"
 #include "testing_solving.h"
@@ -13,7 +14,6 @@ int main() {
                                  .solution_1      = NAN,
                                  .solution_2      = NAN,
                                  .amount_solution = INITIALIZATION};
-
 
     entering_all_coefs(&(Square_Equation.coefficients));
 

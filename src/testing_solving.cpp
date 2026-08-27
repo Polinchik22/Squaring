@@ -4,7 +4,7 @@ double Starting_Test(){
     printf(BLUE "Хотите ли вы протестировать программу? [Y/N] " RESET);
     if (getchar() == 'Y'){
         printf("\n"
-               "Хорошо! Запускаю тестирование... ＼(≧▽≦)／ \n");
+               "Хорошо! Запускаю тестирование... ＼(≧▽≦)／" RESET);
 
         double handed_tests_accuracy   = Running_All_Hand_Tests ();
         double genered_testst_accuracy = Running_generated_tests(AMOUNT_GENERATED_TESTS);
@@ -14,8 +14,9 @@ double Starting_Test(){
                (AMOUNT_REF_TESTS + AMOUNT_GENERATED_TESTS);
 
     } else {
-        printf("\n" "Не беда! Пиши мне если надо будет решить квадратное уравнения!"
-               "Я всегда помогу! \n");
+        printf("\n"
+               "Не беда! Пиши мне если надо будет решить квадратное уравнения!"
+               "Я всегда помогу! \n" RESET);
     }
 
     return 0;
