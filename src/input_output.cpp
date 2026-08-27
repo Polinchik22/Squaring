@@ -107,6 +107,7 @@ AmountSolutions printing_solutions(const Equation Square_Equation) {
 
 
 void printing_error_with_ref(const Equation Ref_Equation, const Equation Prog_Equation){
+    printing_angry_emoje();
     printf(BOLD_RED "ОШИБКА \n" RESET);
 
     printing_equation(Ref_Equation);
@@ -118,6 +119,32 @@ void printing_error_with_ref(const Equation Ref_Equation, const Equation Prog_Eq
     printing_solutions(Prog_Equation);
 }
 
+
+void printing_angry_emoje(){
+
+printf(RED "                @@@@@@@@@@@                \n"      );
+printf(    "           -@@@@+         =@@@@=           \n"      );
+printf(    "         @@@                   @@@         \n"      );
+printf(    "       @@@                       @@@       \n"      );
+printf(    "     @@@                           @@@     \n"      );
+printf(    "    @@   @                      *@   @@    \n"      );
+printf(    "   @@    @@                    -@     @@   \n"      );
+printf(    "  @@#      @@@               @@@      #@@  \n"      );
+printf(    "  @@         @@@@@@     @@@@@@         @@  \n"      );
+printf(    "  @@        @@@@           @@@@        @@  \n"      );
+printf(    " -@-        @@@@           @@@@        -@- \n"      );
+printf(    " .@#        #@@@           @@@         *@. \n"      );
+printf(    "  @@                                   @@  \n"      );
+printf(    "  @@                                   @@  \n"      );
+printf(    "   @@           @@@+@@@+@@@           @@   \n"      );
+printf(    "    @@        @@           @@        @@    \n"      );
+printf(    "     @@      #@             @#      @@     \n"      );
+printf(    "      @@@    @               @    @@@      \n"      );
+printf(    "        @@@                     @@@        \n"      );
+printf(    "          @@@@               @@@@          \n"      );
+printf(    "             +@@@@@@@@@@@@@@@+             \n" RESET);
+
+}
 
 // void painting_function(const Equation Function){
 //     char canvas[20][20];

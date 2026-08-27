@@ -6,8 +6,12 @@
 #include "input_output.h"
 #include "tehnical_fiches.h"
 
+#define NDEBUG
+
 
 int main() {
+    my_assert(0);
+
     Equation Square_Equation = {{.coef_2          = NAN,
                                  .coef_1          = NAN,
                                  .coef_0          = NAN},

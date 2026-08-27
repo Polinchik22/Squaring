@@ -18,4 +18,6 @@ AmountSolutions printing_solutions (const Equation Square_Equation);
 
 void printing_error_with_ref       (const Equation Ref_Equation, const Equation Prog_Equation);
 
+void printing_angry_emoje();
+
 #endif //INPUT_OUTPUT_H
