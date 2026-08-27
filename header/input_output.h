@@ -12,10 +12,10 @@
 void entering_all_coefs (Coefficients* Equation_Coefs);
 void entering_one_coef  (float* coef, const char litera);
 
-void printing_equation  (const Equation Square_Equation);
-void printing_coef      (const float coef, const char* x_part);
-
+void printing_equation             (const Equation Square_Equation);
+void printing_coef                 (const float coef, const char* x_part);
 AmountSolutions printing_solutions (const Equation Square_Equation);
-void            printing_error     (const Equation Ref_Equation, const Equation Prog_Equation);
+
+void printing_error_with_ref       (const Equation Ref_Equation, const Equation Prog_Equation);
 
 #endif //INPUT_OUTPUT_H

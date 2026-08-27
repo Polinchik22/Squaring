@@ -1,35 +1,28 @@
 #include "square_equation.h"
 
 
-bool solving_equation(Equation* Square_Equation) {
-    const Coefficients* Equation_Coefs = &(Square_Equation->coefficients);
+AmountSolutions solving_equation(Equation* Square_Equation) {
+    assert(Square_Equation);
 
-    assert(Equation_Coefs);
-    assert(isfinite(Equation_Coefs->coef_2));
-    assert(isfinite(Equation_Coefs->coef_1));
-    assert(isfinite(Equation_Coefs->coef_0));
-    assert(&(Square_Equation->solution_1));
-    assert(&(Square_Equation->solution_2));
-
-    if (is_equal(Equation_Coefs->coef_2, 0)) {
+    if (is_equal(Square_Equation->coefficients.coef_2, 0)) {
         Square_Equation->amount_solution = solving_eq_deg1(Square_Equation);
 
     } else {
         Square_Equation->amount_solution = solving_eq_deg2(Square_Equation);
     }
 
-    return true;
+    return Square_Equation->amount_solution;
 }
 
 
 AmountSolutions solving_eq_deg2(Equation* Square_Equation) {
+    assert(Square_Equation);
+
     const Coefficients* Equation_Coefs = &(Square_Equation->coefficients);
 
     assert(isfinite(Equation_Coefs->coef_2));
     assert(isfinite(Equation_Coefs->coef_1));
     assert(isfinite(Equation_Coefs->coef_0));
-    assert(&(Square_Equation->solution_1));
-    assert(&(Square_Equation->solution_2));
 
     const float desc = finding_desc(Equation_Coefs);
 
@@ -55,23 +48,20 @@ AmountSolutions solving_eq_deg2(Equation* Square_Equation) {
 
 
 float finding_desc(const Coefficients* Equation_Coefs) {
-    assert(isfinite(Equation_Coefs->coef_2));
-    assert(isfinite(Equation_Coefs->coef_1));
-    assert(isfinite(Equation_Coefs->coef_0));
+    assert(Equation_Coefs);
 
     return (Equation_Coefs->coef_1 * Equation_Coefs->coef_1) - (4 * Equation_Coefs->coef_2 * Equation_Coefs->coef_0);
-
 }
 
 
 AmountSolutions solving_eq_deg1(Equation* Lineal_Equation) {
+    assert(Lineal_Equation);
+
     const Coefficients* Equation_Coefs = &(Lineal_Equation->coefficients);
 
     assert(isfinite(Equation_Coefs->coef_2));
     assert(isfinite(Equation_Coefs->coef_1));
     assert(isfinite(Equation_Coefs->coef_0));
-    assert(&(Lineal_Equation->solution_1));
-    assert(&(Lineal_Equation->solution_2));
 
     if (is_equal(Equation_Coefs->coef_1, 0) && is_equal(Equation_Coefs->coef_0, 0)){
         return INFINITY_SOLUTIONS;
@@ -82,7 +72,6 @@ AmountSolutions solving_eq_deg1(Equation* Lineal_Equation) {
     }else{
         Lineal_Equation->solution_1 = ( - Equation_Coefs->coef_0 / Equation_Coefs->coef_1);
         return ONE_SOLUTION;
-
     }
 }
 

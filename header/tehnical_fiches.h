@@ -7,7 +7,8 @@
 
 #include "general.h"
 
-bool is_equal        (const float coef_2, const float coef_1);
-bool cleaning_buffer ();
+bool  is_equal        (const float coef_2, const float coef_1);
+bool  cleaning_buffer ();
+float frand           ();
 
 #endif //TEHNICAL_FICHES_H

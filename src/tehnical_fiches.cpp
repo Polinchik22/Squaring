@@ -7,6 +7,8 @@ bool is_equal(const float a, const float b) {
     int amount_nans = isnan(a) + isnan(b);
 
     if (amount_nans < 2) { // todo
+        // printf("is_equal: a: %f; b: %f разница: %f, eps = %f \n", a, b, fabs(a - b), EPSILON);
+
         return (fabs(a - b) < EPSILON);
     }
     return true;
@@ -24,4 +26,9 @@ bool cleaning_buffer() {
     }
 
     return true;
+}
+
+
+float frand(){
+    return float(rand()) / float(rand());
 }

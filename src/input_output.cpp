@@ -1,26 +1,26 @@
 #include "input_output.h"
 
 void entering_all_coefs(Coefficients* Equation_Coefs) {
-    assert(&(Equation_Coefs->coef_2));
-    assert(&(Equation_Coefs->coef_1));
-    assert(&(Equation_Coefs->coef_0));
+    assert(Equation_Coefs);
 
     printf("Привет! будем решать ax^2 + bx + c = 0 \n");
 
     entering_one_coef(&(Equation_Coefs->coef_2), 'a');
     entering_one_coef(&(Equation_Coefs->coef_1), 'b');
     entering_one_coef(&(Equation_Coefs->coef_0), 'c');
+
+    printf("\n");
 }
 
 
-void entering_one_coef(float* coef, const char litera){ // todo void?
+void entering_one_coef(float* coef, const char litera){
     assert(coef);
 
     printf("введи коэффициент %c: ", litera);
 
-    bool amount = 0;
-    while ((amount = scanf("%f", coef)) != 1 || cleaning_buffer() == false){ // todo
-        if (amount == 0){
+    bool was_scanned = false;
+    while  (!(was_scanned = scanf("%f", coef)) || cleaning_buffer() == false){
+        if (!was_scanned){
             cleaning_buffer();
         }
         printf("ЧУВААААК, давай без приколов, введи коэффициент %c: ", litera);
@@ -46,7 +46,7 @@ void printing_equation(const Equation Square_Equation){
     printing_coef(Equation_Coefs.coef_1, "x"  );
     printing_coef(Equation_Coefs.coef_0, ""  );
 
-    printf(" = 0 \n");
+    printf("= 0 \n");
     return;
 }
 
@@ -72,7 +72,6 @@ void printing_coef(const float coef, const char* x_part){
     } else {
         printf("%g%s ", abs_coef, x_part);
     }
-
 }
 
 
@@ -107,7 +106,7 @@ AmountSolutions printing_solutions(const Equation Square_Equation) {
 }
 
 
-void printing_error(const Equation Ref_Equation, const Equation Prog_Equation){
+void printing_error_with_ref(const Equation Ref_Equation, const Equation Prog_Equation){
     printf("ОШИБКА \n");
 
     printing_equation(Ref_Equation);

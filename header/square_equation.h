@@ -8,7 +8,7 @@
 #include "general.h"
 #include "tehnical_fiches.h"
 
-bool solving_equation            (Equation* Square_Equation);
+AmountSolutions solving_equation (Equation* Square_Equation);
 AmountSolutions solving_eq_deg2  (Equation* Square_Equation);
 float finding_desc               (const Coefficients* Equation_Coefs);
 AmountSolutions solving_eq_deg1  (Equation* Lineal_Equation);

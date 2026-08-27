@@ -22,7 +22,5 @@ int main() {
     printing_equation(Square_Equation);
     printing_solutions(Square_Equation);
 
-    printf("\n\n");
-
-    Running_All_Tests();
+    Starting_Test();
 }

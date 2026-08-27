@@ -9,7 +9,9 @@ enum AmountSolutions {INITIALIZATION = -2,
                       INFINITY_SOLUTIONS};
 
 const float EPSILON      = 1e-6f;
-const int   AMOUNT_TESTS = 6;
+const int   AMOUNT_REF_TESTS = 9;
+const int   AMOUNT_GENERATED_TESTS = 100;
+
 
 
 struct Coefficients {
