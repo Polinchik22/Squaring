@@ -31,17 +31,18 @@ struct Equation {
 #define RESET             "\033[0m"
 #define BLUE              "\033[36m"
 
-#ifndef NOTDEBUG
-#define my_assert(statement)                                                                   \
+#ifndef NDEBUG
+#define my_assert(statement) \
             if (!statement){                                                                   \
                 printing_angry_emoje();                                                        \
-                printf(BOLD_RED "Вы жестко ******. (°ロ°) ! \n" RESET                          \
+                printf(BOLD_RED "Вы жестко ******.! \n" RESET                          \
                        RED      "Конкретнее: в фаиле %s, в функции %s на строчке %d \n" RESET, \
                         __FILE__, __func__, __LINE__);                                         \
             abort();                                                                           \
-            }                                                                                  \
+            }
+#else
+#define my_assert(statement) ((void)0)
+
 #endif //NOTDEBUG
-
-
 
 #endif //GENERAL_H

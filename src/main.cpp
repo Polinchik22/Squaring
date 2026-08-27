@@ -8,10 +8,11 @@
 
 #define NDEBUG
 
+#include <assert.h>
+
 
 int main() {
     my_assert(0);
-
     Equation Square_Equation = {{.coef_2          = NAN,
                                  .coef_1          = NAN,
                                  .coef_0          = NAN},
