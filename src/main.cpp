@@ -23,4 +23,6 @@ int main() {
     printing_solutions(Square_Equation);
 
     Starting_Test();
+
+    printf("\n");
 }

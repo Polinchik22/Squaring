@@ -16,14 +16,14 @@ void entering_all_coefs(Coefficients* Equation_Coefs) {
 void entering_one_coef(float* coef, const char litera){
     assert(coef);
 
-    printf("введи коэффициент %c: ", litera);
+    printf("Введи коэффициент %c: ", litera);
 
     bool was_scanned = false;
     while  (!(was_scanned = scanf("%f", coef)) || cleaning_buffer() == false){
         if (!was_scanned){
             cleaning_buffer();
         }
-        printf("ЧУВААААК, давай без приколов, введи коэффициент %c: ", litera);
+        printf(UNDERLINE_YELLOW "ЧУВААААК, давай без приколов," RESET " введи коэффициент %c: ", litera);
     }
 }
 
@@ -82,24 +82,24 @@ AmountSolutions printing_solutions(const Equation Square_Equation) {
                 break;
 
             case (NO_SOLUTIONS):
-                printf("Нет решений ┐(￣ヘ￣)┌ \n");
+                printf("Нет решений ┐(￣ヘ￣)┌ \n\n");
                 break;
 
             case (ONE_SOLUTION):
-                printf("1 решение: x1 = %g (＾▽＾) \n", Square_Equation.solution_1);
+                printf("1 решение: x1 = %g (＾▽＾) \n\n", Square_Equation.solution_1);
                 break;
 
             case (TWO_SOLUTIONS):
-                printf("2 решения: x1 = %g; x2 = %g (o˘◡˘o)\n", Square_Equation.solution_1, Square_Equation.solution_2);
+                printf("2 решения: x1 = %g; x2 = %g (o˘◡˘o) \n\n", Square_Equation.solution_1, Square_Equation.solution_2);
                 break;
 
             case (INFINITY_SOLUTIONS):
-                printf("Бесконечное количество решений (⊙_⊙)\n");
+                printf("Бесконечное количество решений (⊙_⊙) \n\n");
                 break;
 
             case (INITIALIZATION):
             default:
-                printf("ПРОИЗОШЛА ОШИБКА (^_-)\n");
+                printf(BOLD_RED "ПРОИЗОШЛА ОШИБКА (^_-) \n\n" RESET);
                 break;
         }
     return Square_Equation.amount_solution;
@@ -107,7 +107,7 @@ AmountSolutions printing_solutions(const Equation Square_Equation) {
 
 
 void printing_error_with_ref(const Equation Ref_Equation, const Equation Prog_Equation){
-    printf("ОШИБКА \n");
+    printf(BOLD_RED "ОШИБКА \n" RESET);
 
     printing_equation(Ref_Equation);
 

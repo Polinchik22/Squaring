@@ -9,8 +9,8 @@
 #include "general.h"
 #include "tehnical_fiches.h"
 
-void entering_all_coefs (Coefficients* Equation_Coefs);
-void entering_one_coef  (float* coef, const char litera);
+void entering_all_coefs            (Coefficients* Equation_Coefs);
+void entering_one_coef             (float* coef, const char litera);
 
 void printing_equation             (const Equation Square_Equation);
 void printing_coef                 (const float coef, const char* x_part);

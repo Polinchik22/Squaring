@@ -4,14 +4,10 @@
 bool is_equal(const float a, const float b) {
     // Здесь осознано не пишу асcерты, тк может принимать NAN
 
-    int amount_nans = isnan(a) + isnan(b);
-
-    if (amount_nans < 2) { // todo
-        // printf("is_equal: a: %f; b: %f разница: %f, eps = %f \n", a, b, fabs(a - b), EPSILON);
-
-        return (fabs(a - b) < EPSILON);
+    if (isnan(a) && isnan(b)){
+        return true;
     }
-    return true;
+    return (fabs(a - b) < EPSILON);
 }
 
 

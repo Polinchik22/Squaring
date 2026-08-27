@@ -1,15 +1,21 @@
 #include "testing_solving.h"
 
 double Starting_Test(){
-    printf("Хотите ли вы протестировать программу? [Y/N] ");
+    printf(BLUE "Хотите ли вы протестировать программу? [Y/N] " RESET);
     if (getchar() == 'Y'){
-        printf("\n" "Хорошо! Запускаю тестирование... \n");
+        printf("\n"
+               "Хорошо! Запускаю тестирование... ＼(≧▽≦)／ \n");
 
-        Running_All_Hand_Tests();
-        Running_generated_tests(AMOUNT_GENERATED_TESTS);
+        double handed_tests_accuracy   = Running_All_Hand_Tests ();
+        double genered_testst_accuracy = Running_generated_tests(AMOUNT_GENERATED_TESTS);
+
+        return (handed_tests_accuracy * AMOUNT_REF_TESTS +
+                genered_testst_accuracy * AMOUNT_GENERATED_TESTS) /
+               (AMOUNT_REF_TESTS + AMOUNT_GENERATED_TESTS);
+
     } else {
         printf("\n" "Не беда! Пиши мне если надо будет решить квадратное уравнения!"
-                "Я всегда помогу!");
+               "Я всегда помогу! \n");
     }
 
     return 0;
@@ -37,14 +43,14 @@ double Running_All_Hand_Tests() {
 
     double hand_tests_accuracy = correct_ref_tests / AMOUNT_REF_TESTS;
 
-    printf("\n Верных ручных проверок %d из %d \n", correct_ref_tests, AMOUNT_REF_TESTS);
+    printf("\n" BOLD_GREEN "Верных ручных проверок %d из %d" RESET, correct_ref_tests, AMOUNT_REF_TESTS);
 
     return hand_tests_accuracy;
 }
 
 
 bool Running_Hand_Test(const Equation Ref_Equation){
-    //не ебу, каж не нужны асерты
+    //не ебу, не нужны асерты
 
     Equation Prog_Equation = {Ref_Equation.coefficients,
                               .solution_1      = NAN,
@@ -58,6 +64,7 @@ bool Running_Hand_Test(const Equation Ref_Equation){
             !is_equal(Ref_Equation.solution_2, Prog_Equation.solution_2)) {
 
         printing_error_with_ref(Ref_Equation, Prog_Equation);
+
         return false;
         }
 
@@ -87,7 +94,7 @@ double Running_generated_tests(int amount_generated_tests){
 
     double gener_testst_accuracy = correct_generated_tests / amount_generated_tests;
 
-    printf("\n Верных сгенерированных тестов %d из %d \n",
+    printf(BOLD_GREEN "\n" "Верных сгенерированных тестов %d из %d \n" RESET,
             correct_generated_tests, amount_generated_tests);
 
     return gener_testst_accuracy;
@@ -123,15 +130,12 @@ bool Checking_all_solutions(const Equation* Gener_Equation){
 }
 
 
-
-
 bool Checking_solution(const Coefficients* Equation_Coefs, const float solution){
     assert(Equation_Coefs);
 
     float substitution = Equation_Coefs->coef_2 * solution * solution +
                          Equation_Coefs->coef_1 * solution +
                          Equation_Coefs->coef_0;
-    printf("root: %f, sust: %f, is zero: %d \n", solution, substitution, is_equal(substitution, 0));
     return is_equal(substitution, 0);
 }
 
