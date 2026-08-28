@@ -13,7 +13,9 @@
 
 int main() {
     // my_assert(0);
-    ai_use_chatting();
+    Ai_use_chatting();
+
+    Starting_test();
 
     Equation Square_Equation = {{.coef_2          = NAN,
                                  .coef_1          = NAN,
@@ -22,14 +24,12 @@ int main() {
                                  .solution_2      = NAN,
                                  .amount_solution = INITIALIZATION};
 
-    entering_all_coefs(&(Square_Equation.coefficients));
+    Entering_all_coefs(&(Square_Equation.coefficients));
 
-    solving_equation(&Square_Equation);
+    Solving_equation(&Square_Equation);
 
-    printing_equation(Square_Equation);
-    printing_solutions(Square_Equation);
-
-    Starting_Test();
+    Printing_equation(Square_Equation);
+    Printing_solutions(Square_Equation);
 
     printf("\n");
 }

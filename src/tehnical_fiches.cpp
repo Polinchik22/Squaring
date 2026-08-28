@@ -1,9 +1,8 @@
 #include "tehnical_fiches.h"
 
 
-bool is_equal(const float a, const float b) {
+bool Is_equal(const float a, const float b) {
     // Здесь осознано не пишу асcерты, тк может принимать NAN
-
     if (isnan(a) && isnan(b)){
         return true;
     }
@@ -11,7 +10,7 @@ bool is_equal(const float a, const float b) {
 }
 
 
-bool cleaning_buffer() {
+bool Cleaning_buffer() {
     int c = 0;
 
     while ((c = getchar()) != '\n') {
@@ -25,12 +24,23 @@ bool cleaning_buffer() {
 }
 
 
-float frand(){
+float Frand(){
     return float(rand()) / float(rand() + 1);
 }
 
 
-void printing_angry_emoje(){
+bool Is_yes(){
+    int c = getchar();
+    Cleaning_buffer();
+
+    if (c == 'Y' || c == 'y'){
+        return true;
+    }
+    return false;
+}
+
+
+void Printing_angry_emoji(){
 
 printf(RED "                @@@@@@@@@@@                \n"      );
 printf(    "           -@@@@+         =@@@@=           \n"      );

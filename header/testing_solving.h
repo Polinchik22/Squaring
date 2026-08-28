@@ -25,15 +25,17 @@ const Equation Ref_Book[AMOUNT_REF_TESTS] = {
         {{.coef_2 = 0, .coef_1 =  0, .coef_0 =   0}, .solution_1 =  NAN, .solution_2 =  NAN, .amount_solution = INFINITY_SOLUTIONS},
     };
 
-bool Starting_Test           ();
+bool Starting_test                     ();
 
-void Running_tests_from_fail ();
-void Running_All_Hand_Tests  ();
-bool Running_Hand_Test       (const Equation Ref_Equation);
+void Running_tests_from_file           ();
 
-void Running_generated_tests         (int amount_generated_tests);
-bool Checking_all_solutions_by_coefs (Equation* Generated_Equation);
-bool Checking_solution               (const Coefficients* Equation_Coefs, const float solution);
+void Running_all_hand_tests            ();
+bool Running_hand_test                 (const Equation Ref_Equation);
+
+void Running_generated_tests           (int amount_generated_tests);
+
+bool Checking_solving_by_substitution  (Equation* Generated_Equation);
+bool Checking_substitution             (const Coefficients* Equation_Coefs, const float solution);
 
 // void   creating_equation_by_solutions (AmountSolutions amount_solutions, float* coef_2, float* coef_1, float* coef_0, float solution_1, float solution_2);
 

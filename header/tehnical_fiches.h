@@ -7,10 +7,11 @@
 
 #include "general.h"
 
-bool  is_equal        (const float coef_2, const float coef_1);
-bool  cleaning_buffer ();
-float frand           ();
+bool  Is_equal             (const float coef_2, const float coef_1);
+bool  Cleaning_buffer      ();
+float Frand                ();
 
-void printing_angry_emoje();
+bool  Is_yes               ();
+void  Printing_angry_emoji ();
 
 #endif //TECHNICAL_FICHES_H

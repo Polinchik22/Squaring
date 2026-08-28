@@ -36,10 +36,10 @@ struct Equation {
 #define RESET             "\033[0m"
 
 #ifndef NDEBUG
-#define my_assert(statement) \
+#define my_assert(statement)                                                                   \
             if (!statement){                                                                   \
-                printing_angry_emoje();                                                        \
-                printf(BOLD_RED "Вы жестко ******.! \n" RESET                          \
+                Printing_angry_emoji();                                                        \
+                printf(BOLD_RED "Вы жестко ******.! \n" RESET                                  \
                        RED      "Конкретнее: в фаиле %s, в функции %s на строчке %d \n" RESET, \
                         __FILE__, __func__, __LINE__);                                         \
             abort();                                                                           \
