@@ -27,10 +27,15 @@ AmountSolutions solving_eq_deg2(Equation* Square_Equation) {
     const float desc = finding_desc(Equation_Coefs);
 
     if (desc < 0) {
+        Square_Equation->solution_1 = NAN;
+        Square_Equation->solution_2 = NAN;
+
         return NO_SOLUTIONS;
 
     } else if (is_equal(desc, 0)) {
         Square_Equation->solution_1 = - Equation_Coefs->coef_1 / (2 * Equation_Coefs->coef_2);
+        Square_Equation->solution_2 = NAN;
+
         return ONE_SOLUTION;
 
     } else if (desc > 0) {
@@ -38,6 +43,7 @@ AmountSolutions solving_eq_deg2(Equation* Square_Equation) {
 
         Square_Equation->solution_1 = ( - Equation_Coefs->coef_1 + sqr_desc) / (2 * Equation_Coefs->coef_2);
         Square_Equation->solution_2 = ( - Equation_Coefs->coef_1 - sqr_desc) / (2 * Equation_Coefs->coef_2);
+
         return TWO_SOLUTIONS;
 
     } else {
@@ -54,23 +60,31 @@ float finding_desc(const Coefficients* Equation_Coefs) {
 }
 
 
-AmountSolutions solving_eq_deg1(Equation* Lineal_Equation) {
-    assert(Lineal_Equation);
+AmountSolutions solving_eq_deg1(Equation* Lineral_Equation) {
+    assert(Lineral_Equation);
 
-    const Coefficients* Equation_Coefs = &(Lineal_Equation->coefficients);
+    const Coefficients* Equation_Coefs = &(Lineral_Equation->coefficients);
 
     assert(isfinite(Equation_Coefs->coef_2));
     assert(isfinite(Equation_Coefs->coef_1));
     assert(isfinite(Equation_Coefs->coef_0));
 
     if (is_equal(Equation_Coefs->coef_1, 0) && is_equal(Equation_Coefs->coef_0, 0)){
+        Lineral_Equation->solution_1 = NAN;
+        Lineral_Equation->solution_2 = NAN;
+
         return INFINITY_SOLUTIONS;
 
     } else if (is_equal(Equation_Coefs->coef_1, 0) && !is_equal(Equation_Coefs->coef_0, 0)){
+        Lineral_Equation->solution_1 = NAN;
+        Lineral_Equation->solution_2 = NAN;
+
         return NO_SOLUTIONS;
 
     }else{
-        Lineal_Equation->solution_1 = ( - Equation_Coefs->coef_0 / Equation_Coefs->coef_1);
+        Lineral_Equation->solution_1 = ( - Equation_Coefs->coef_0 / Equation_Coefs->coef_1);
+        Lineral_Equation->solution_2 = NAN;
+
         return ONE_SOLUTION;
     }
 }

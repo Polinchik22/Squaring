@@ -29,3 +29,29 @@ float frand(){
     return float(rand()) / float(rand() + 1);
 }
 
+
+void printing_angry_emoje(){
+
+printf(RED "                @@@@@@@@@@@                \n"      );
+printf(    "           -@@@@+         =@@@@=           \n"      );
+printf(    "         @@@                   @@@         \n"      );
+printf(    "       @@@                       @@@       \n"      );
+printf(    "     @@@                           @@@     \n"      );
+printf(    "    @@   @                      *@   @@    \n"      );
+printf(    "   @@    @@                    -@     @@   \n"      );
+printf(    "  @@#      @@@               @@@      #@@  \n"      );
+printf(    "  @@         @@@@@@     @@@@@@         @@  \n"      );
+printf(    "  @@        @@@@           @@@@        @@  \n"      );
+printf(    " -@-        @@@@           @@@@        -@- \n"      );
+printf(    " .@#        #@@@           @@@         *@. \n"      );
+printf(    "  @@                                   @@  \n"      );
+printf(    "  @@                                   @@  \n"      );
+printf(    "   @@           @@@+@@@+@@@           @@   \n"      );
+printf(    "    @@        @@           @@        @@    \n"      );
+printf(    "     @@      #@             @#      @@     \n"      );
+printf(    "      @@@    @               @    @@@      \n"      );
+printf(    "        @@@                     @@@        \n"      );
+printf(    "          @@@@               @@@@          \n"      );
+printf(    "             +@@@@@@@@@@@@@@@+             \n" RESET);
+
+}

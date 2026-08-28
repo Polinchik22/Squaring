@@ -106,6 +106,15 @@ AmountSolutions printing_solutions(const Equation Square_Equation) {
 }
 
 
+void printing_error_in_tests(bool is_correct_test, Equation Solved_Equation){
+    if (!is_correct_test){
+            printf("ОШИБКА \n");
+            printing_equation(Solved_Equation);
+            printing_solutions(Solved_Equation);
+        }
+}
+
+
 void printing_error_with_ref(const Equation Ref_Equation, const Equation Prog_Equation){
     printing_angry_emoje();
     printf(BOLD_RED "ОШИБКА \n" RESET);
@@ -120,30 +129,37 @@ void printing_error_with_ref(const Equation Ref_Equation, const Equation Prog_Eq
 }
 
 
-void printing_angry_emoje(){
+bool chatting_about_file_testing(){
+    cleaning_buffer();
 
-printf(RED "                @@@@@@@@@@@                \n"      );
-printf(    "           -@@@@+         =@@@@=           \n"      );
-printf(    "         @@@                   @@@         \n"      );
-printf(    "       @@@                       @@@       \n"      );
-printf(    "     @@@                           @@@     \n"      );
-printf(    "    @@   @                      *@   @@    \n"      );
-printf(    "   @@    @@                    -@     @@   \n"      );
-printf(    "  @@#      @@@               @@@      #@@  \n"      );
-printf(    "  @@         @@@@@@     @@@@@@         @@  \n"      );
-printf(    "  @@        @@@@           @@@@        @@  \n"      );
-printf(    " -@-        @@@@           @@@@        -@- \n"      );
-printf(    " .@#        #@@@           @@@         *@. \n"      );
-printf(    "  @@                                   @@  \n"      );
-printf(    "  @@                                   @@  \n"      );
-printf(    "   @@           @@@+@@@+@@@           @@   \n"      );
-printf(    "    @@        @@           @@        @@    \n"      );
-printf(    "     @@      #@             @#      @@     \n"      );
-printf(    "      @@@    @               @    @@@      \n"      );
-printf(    "        @@@                     @@@        \n"      );
-printf(    "          @@@@               @@@@          \n"      );
-printf(    "             +@@@@@@@@@@@@@@@+             \n" RESET);
+    printf(GREEN "Сори, Бро, последний вопрос (⁄ ⁄>⁄ ▽ ⁄<⁄ ⁄) \n\n"
+               "Хочешь загрузить фаил с тестами? [Y/N] " RESET);
 
+    if (getchar() == 'Y'){
+        printf("\n" PINK
+                "Просто ВАУ! Бро, ты лушчий пользователь, который юзает все фичи ( ´ ∀ `)ノ～ ♡  \n"
+                "Проверяю тесты из фаила tests.txt, мои тесты с краевыми случаями и сгенерированные тесты \n\n" RESET);
+        return true;
+    }
+
+    printf("\n" RED
+           "Не хотите, как хотите. Баба с возу: кобыле легче..." RESET);
+    return false;
+}
+
+
+void ai_use_chatting(){
+    printf(BRIGHT_BOLD_BLUE "\n"
+                            "Дорогой пользователь! В этой программе внедрен супер умный AI агент,"
+                            "который будет делать все за тебя! \n"
+                            "Представляешь, мозг вообще использовать не надо ☆*:.｡.o(≧▽≦)o.｡.:*☆ \n\n"
+                            "Согласен его включить? [Y/N] " RESET);
+    if (getchar() == 'Y'){
+        printf(BOLD_RED "ВЫ ЗАБАНЕНЫ (ﾒ﹏ﾒ) \n" RESET);
+        exit(1);
+    }
+
+    printf(BOLD_GREEN "Это была проверка и ты ее прощел! Я тебе помогу с математикой (o^ ^o) \n\n" RESET);
 }
 
 // void painting_function(const Equation Function){

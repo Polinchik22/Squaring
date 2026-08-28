@@ -28,8 +28,12 @@ struct Equation {
 #define RED               "\033[31m"
 #define UNDERLINE_YELLOW  "\033[4;93m"
 #define BOLD_GREEN        "\033[1;32m"
-#define RESET             "\033[0m"
+#define GREEN             "\033[32m"
 #define BLUE              "\033[36m"
+#define BRIGHT_BOLD_BLUE  "\033[1;94m"
+#define PINK              "\033[1;38;5;201m"
+#define BOLD_PURPLE       "\033[1;95m"
+#define RESET             "\033[0m"
 
 #ifndef NDEBUG
 #define my_assert(statement) \

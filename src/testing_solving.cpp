@@ -1,57 +1,84 @@
 #include "testing_solving.h"
 
-double Starting_Test(){
+bool Starting_Test(){
     printf(BLUE "Хотите ли вы протестировать программу? [Y/N] " RESET);
     if (getchar() == 'Y'){
-        printf("\n"
-               "Хорошо! Запускаю тестирование... ＼(≧▽≦)／" RESET);
+        printf("\n" BOLD_GREEN
+               "Хорошо! Запускаю тестирование... ＼(≧▽≦)／ \n\n" RESET);
 
-        double handed_tests_accuracy   = Running_All_Hand_Tests ();
-        double genered_testst_accuracy = Running_generated_tests(AMOUNT_GENERATED_TESTS);
+        Running_tests_from_fail();
+        Running_All_Hand_Tests ();
+        Running_generated_tests(AMOUNT_GENERATED_TESTS);
 
-        return (handed_tests_accuracy * AMOUNT_REF_TESTS +
-                genered_testst_accuracy * AMOUNT_GENERATED_TESTS) /
-               (AMOUNT_REF_TESTS + AMOUNT_GENERATED_TESTS);
+        return true;
 
     } else {
         printf("\n"
-               "Не беда! Пиши мне если надо будет решить квадратное уравнения!"
+               "Не больно-то и хотелось (￣ヘ￣) \n"
                "Я всегда помогу! \n" RESET);
+
+        return false;
     }
 
-    return 0;
 }
 
 
-double Running_All_Hand_Tests() {
-    int correct_ref_tests = 0;
+void Running_tests_from_fail(){
+    bool is_run_tests_from_fail = chatting_about_file_testing();
 
-    const Equation Ref_Book[AMOUNT_REF_TESTS] = {
-        {{.coef_2 = 1, .coef_1 = -5, .coef_0 =   6}, .solution_1 =  3  , .solution_2 =  2  , .amount_solution = TWO_SOLUTIONS     },
-        {{.coef_2 = 1, .coef_1 =  0, .coef_0 =  -1}, .solution_1 =  1  , .solution_2 = -1  , .amount_solution = TWO_SOLUTIONS     },
-        {{.coef_2 = 1, .coef_1 = -1, .coef_0 =   0}, .solution_1 =  1  , .solution_2 =  0  , .amount_solution = TWO_SOLUTIONS     },
-        {{.coef_2 = 1, .coef_1 =  2, .coef_0 =   1}, .solution_1 = -1  , .solution_2 =  NAN, .amount_solution = ONE_SOLUTION      },
-        {{.coef_2 = 0, .coef_1 =  1, .coef_0 =  -1}, .solution_1 =  1  , .solution_2 =  NAN, .amount_solution = ONE_SOLUTION      },
-        {{.coef_2 = 1, .coef_1 =  0, .coef_0 =   0}, .solution_1 =  0  , .solution_2 =  NAN, .amount_solution = ONE_SOLUTION      },
-        {{.coef_2 = 1, .coef_1 =  0, .coef_0 =   1}, .solution_1 =  NAN, .solution_2 =  NAN, .amount_solution = NO_SOLUTIONS      },
-        {{.coef_2 = 1, .coef_1 =  1, .coef_0 =  23}, .solution_1 =  NAN, .solution_2 =  NAN, .amount_solution = NO_SOLUTIONS      },
-        {{.coef_2 = 0, .coef_1 =  0, .coef_0 =   0}, .solution_1 =  NAN, .solution_2 =  NAN, .amount_solution = INFINITY_SOLUTIONS},
-    };
+    if (!is_run_tests_from_fail){
+        return;
+    }
+
+    FILE* ftests = NULL;
+    ftests = fopen("tests.tx", "r");
+
+    if (ftests == NULL){
+        printing_angry_emoje();
+        printf(BOLD_RED "Ну ты и воздухан! Нет такого файла" RESET);
+        return;
+    }
+
+    int correct_file_tests = 0;
+    int amount__file_tests = 0;
+    Equation Equation_from_file = {{.coef_2          = NAN,
+                                    .coef_1          = NAN,
+                                    .coef_0          = NAN},
+                                    .solution_1      = NAN,
+                                    .solution_2      = NAN,
+                                    .amount_solution = INITIALIZATION};
+
+    while (fscanf(ftests, "a = %f, b = %f, c = %f\n",
+                &Equation_from_file.coefficients.coef_2,
+                &Equation_from_file.coefficients.coef_1,
+                &Equation_from_file.coefficients.coef_0) == READ_CORRECT_COEFFICIENTS){
+
+        bool is_correct = Checking_all_solutions_by_coefs(&Equation_from_file);
+
+        printing_error_in_tests(is_correct, Equation_from_file);
+
+        correct_file_tests += is_correct;
+        amount__file_tests++;
+        }
+
+    fclose(ftests);
+    printf("\n" BOLD_GREEN "Верных проверок из фаила %d из %d" RESET, correct_file_tests, amount__file_tests);
+}
+
+
+void Running_All_Hand_Tests() {
+    int correct_ref_tests = 0;
 
     for (int i = 0; i < AMOUNT_REF_TESTS; i++){
         correct_ref_tests += Running_Hand_Test(Ref_Book[i]);
     }
-
-    double hand_tests_accuracy = correct_ref_tests / AMOUNT_REF_TESTS;
-
     printf("\n" BOLD_GREEN "Верных ручных проверок %d из %d" RESET, correct_ref_tests, AMOUNT_REF_TESTS);
 
-    return hand_tests_accuracy;
 }
 
 
 bool Running_Hand_Test(const Equation Ref_Equation){
-    //не ебу, не нужны асерты
+    //не нужны асерты
 
     Equation Prog_Equation = {Ref_Equation.coefficients,
                               .solution_1      = NAN,
@@ -73,7 +100,7 @@ bool Running_Hand_Test(const Equation Ref_Equation){
 }
 
 
-double Running_generated_tests(int amount_generated_tests){
+void Running_generated_tests(int amount_generated_tests){
     int correct_generated_tests = 0;
 
     for (int test_numb = 0; test_numb < amount_generated_tests; test_numb++){
@@ -82,39 +109,33 @@ double Running_generated_tests(int amount_generated_tests){
                                     .solution_2      = NAN,
                                     .amount_solution = INITIALIZATION};
 
-        solving_equation(&Generated_Equation);
+        bool is_correct = Checking_all_solutions_by_coefs(&Generated_Equation);
 
-        bool is_correct = Checking_all_solutions(&Generated_Equation);
-        if (!is_correct){
-            printf("ОШИБКА \n");
-            printing_equation(Generated_Equation);
-            printing_solutions(Generated_Equation);
-        }
+        printing_error_in_tests(is_correct, Generated_Equation);
+
         correct_generated_tests += is_correct;
     }
 
-    double gener_testst_accuracy = correct_generated_tests / amount_generated_tests;
-
     printf(BOLD_GREEN "\n" "Верных сгенерированных тестов %d из %d \n" RESET,
             correct_generated_tests, amount_generated_tests);
-
-    return gener_testst_accuracy;
 }
 
 
-bool Checking_all_solutions(const Equation* Gener_Equation){
-    assert(Gener_Equation);
-    assert(isfinite(Gener_Equation->coefficients.coef_2));
-    assert(isfinite(Gener_Equation->coefficients.coef_1));
-    assert(isfinite(Gener_Equation->coefficients.coef_0));
+bool Checking_all_solutions_by_coefs(Equation* Square_Equation){
+    assert(Square_Equation);
+    assert(isfinite(Square_Equation->coefficients.coef_2));
+    assert(isfinite(Square_Equation->coefficients.coef_1));
+    assert(isfinite(Square_Equation->coefficients.coef_0));
 
-    const Coefficients* Equation_Coefs = &(Gener_Equation->coefficients);
+    const Coefficients* Equation_Coefs = &(Square_Equation->coefficients);
 
-    bool is_correct_solution_1 = Checking_solution(Equation_Coefs, Gener_Equation->solution_1);
-    bool is_correct_solution_2 = Checking_solution(Equation_Coefs, Gener_Equation->solution_2);
+    solving_equation(Square_Equation);
 
-    if (isfinite(Gener_Equation->solution_1)) {
-        if (isfinite(Gener_Equation->solution_2)) {
+    bool is_correct_solution_1 = Checking_solution(Equation_Coefs, Square_Equation->solution_1);
+    bool is_correct_solution_2 = Checking_solution(Equation_Coefs, Square_Equation->solution_2);
+
+    if (isfinite(Square_Equation->solution_1)) {
+        if (isfinite(Square_Equation->solution_2)) {
             return is_correct_solution_1 && is_correct_solution_2;
 
         } else if (!is_equal(finding_desc(Equation_Coefs), 0) && !is_equal(Equation_Coefs->coef_2, 0)) {

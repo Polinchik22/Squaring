@@ -12,7 +12,9 @@
 
 
 int main() {
-    my_assert(0);
+    // my_assert(0);
+    ai_use_chatting();
+
     Equation Square_Equation = {{.coef_2          = NAN,
                                  .coef_1          = NAN,
                                  .coef_0          = NAN},
