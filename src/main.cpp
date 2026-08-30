@@ -1,18 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "square_equation.h"
 #include "testing_solving.h"
 #include "input_output.h"
 #include "tehnical_fiches.h"
+#include "painting.h"
 
-#define NDEBUG
+// #define NDEBUG
 
 #include <assert.h>
 
 
 int main() {
     // my_assert(0);
+
     Ai_use_chatting();
 
     Starting_test();
@@ -32,4 +35,7 @@ int main() {
     Printing_solutions(Square_Equation);
 
     printf("\n");
+
+    Drawing(Square_Equation.coefficients);
+
 }

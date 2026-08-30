@@ -25,6 +25,7 @@ bool Cleaning_buffer() {
 
 
 float Frand(){
+    srand((unsigned int)time(NULL));
     return float(rand()) / float(rand() + 1);
 }
 
@@ -42,26 +43,26 @@ bool Is_yes(){
 
 void Printing_angry_emoji(){
 
-printf(RED "                @@@@@@@@@@@                \n"      );
-printf(    "           -@@@@+         =@@@@=           \n"      );
-printf(    "         @@@                   @@@         \n"      );
-printf(    "       @@@                       @@@       \n"      );
-printf(    "     @@@                           @@@     \n"      );
-printf(    "    @@   @                      *@   @@    \n"      );
-printf(    "   @@    @@                    -@     @@   \n"      );
-printf(    "  @@#      @@@               @@@      #@@  \n"      );
-printf(    "  @@         @@@@@@     @@@@@@         @@  \n"      );
-printf(    "  @@        @@@@           @@@@        @@  \n"      );
-printf(    " -@-        @@@@           @@@@        -@- \n"      );
-printf(    " .@#        #@@@           @@@         *@. \n"      );
-printf(    "  @@                                   @@  \n"      );
-printf(    "  @@                                   @@  \n"      );
-printf(    "   @@           @@@+@@@+@@@           @@   \n"      );
-printf(    "    @@        @@           @@        @@    \n"      );
-printf(    "     @@      #@             @#      @@     \n"      );
-printf(    "      @@@    @               @    @@@      \n"      );
-printf(    "        @@@                     @@@        \n"      );
-printf(    "          @@@@               @@@@          \n"      );
-printf(    "             +@@@@@@@@@@@@@@@+             \n" RESET);
+printf(COLOR_RED "                @@@@@@@@@@@                \n"            );
+printf(          "           -@@@@+         =@@@@=           \n"            );
+printf(          "         @@@                   @@@         \n"            );
+printf(          "       @@@                       @@@       \n"            );
+printf(          "     @@@                           @@@     \n"            );
+printf(          "    @@   @                      *@   @@    \n"            );
+printf(          "   @@    @@                    -@     @@   \n"            );
+printf(          "  @@#      @@@               @@@      #@@  \n"            );
+printf(          "  @@         @@@@@@     @@@@@@         @@  \n"            );
+printf(          "  @@        @@@@           @@@@        @@  \n"            );
+printf(          " -@-        @@@@           @@@@        -@- \n"            );
+printf(          " .@#        #@@@           @@@         *@. \n"            );
+printf(          "  @@                                   @@  \n"            );
+printf(          "  @@                                   @@  \n"            );
+printf(          "   @@           @@@+@@@+@@@           @@   \n"            );
+printf(          "    @@        @@           @@        @@    \n"            );
+printf(          "     @@      #@             @#      @@     \n"            );
+printf(          "      @@@    @               @    @@@      \n"            );
+printf(          "        @@@                     @@@        \n"            );
+printf(          "          @@@@               @@@@          \n"            );
+printf(          "             +@@@@@@@@@@@@@@@+             \n" COLOR_RESET);
 
 }

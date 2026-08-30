@@ -11,7 +11,14 @@
 #include "input_output.h"
 #include "general.h"
 
+
 int const READ_CORRECT_COEFFICIENTS = 3;
+
+/// @brief The number of built‑in tests with recorded correct answers.
+const int   AMOUNT_REF_TESTS = 9;
+
+/// @brief The number of generated tests
+const int   AMOUNT_GENERATED_TESTS = 100;
 
 const Equation Ref_Book[AMOUNT_REF_TESTS] = {
         {{.coef_2 = 1, .coef_1 = -5, .coef_0 =   6}, .solution_1 =  3  , .solution_2 =  2  , .amount_solution = TWO_SOLUTIONS     },

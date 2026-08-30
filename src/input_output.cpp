@@ -1,17 +1,18 @@
 #include "input_output.h"
 
 void Ai_use_chatting(){
-    printf(BRIGHT_BOLD_BLUE "\n"
+    printf(COLOR_BRIGHT_BOLD_BLUE "\n"
                             "Дорогой пользователь! В этой программе внедрен супер умный AI агент,"
                             "который будет делать все за тебя! \n"
                             "Представляешь, мозг вообще использовать не надо ☆*:.｡.o(≧▽≦)o.｡.:*☆ \n\n"
-                            "Согласен его включить? [Y/N] " RESET);
+                            "Согласен его включить? [Y/N] " COLOR_RESET);
     if (Is_yes()){
-        printf(BOLD_RED "ВЫ ЗАБАНЕНЫ (ﾒ﹏ﾒ) \n" RESET);
+        printf(COLOR_RED      "ФУУУ, я такое не уважалю, думай сам! \n" COLOR_RESET
+               COLOR_BOLD_RED "ВЫ ЗАБАНЕНЫ (ﾒ﹏ﾒ) \n" COLOR_RESET);
         exit(1);
     }
 
-    printf(BOLD_GREEN "Это была проверка и ты ее прощел! Я тебе помогу с математикой (o^ ^o) \n\n" RESET);
+    printf(COLOR_BOLD_GREEN "Это была проверка и ты ее прощел! Я тебе помогу с математикой (o^ ^o) \n\n" COLOR_RESET);
 }
 
 
@@ -38,7 +39,7 @@ void Entering_one_coef(float* coef, const char litera){
         if (!was_scanned){
             Cleaning_buffer();
         }
-        printf(UNDERLINE_YELLOW "ЧУВААААК, давай без приколов," RESET " введи коэффициент %c: ", litera);
+        printf(COLOR_UNDERLINE_YELLOW "ЧУВААААК, давай без приколов," COLOR_RESET " введи коэффициент %c: ", litera);
     }
 }
 
@@ -93,7 +94,7 @@ void Printing_coef(const float coef, const char* x_part){
 AmountSolutions Printing_solutions(const Equation Square_Equation) {
     switch(Square_Equation.amount_solution){
             case (PROBLEM):
-                printf("ПРОИЗОШЛА ОШИБКА/n");
+                printf(COLOR_BOLD_RED "ПРОИЗОШЛА ОШИБКА (^_-) \n\n" COLOR_RESET);
                 break;
 
             case (NO_SOLUTIONS):
@@ -114,7 +115,7 @@ AmountSolutions Printing_solutions(const Equation Square_Equation) {
 
             case (INITIALIZATION):
             default:
-                printf(BOLD_RED "ПРОИЗОШЛА ОШИБКА (^_-) \n\n" RESET);
+                printf(COLOR_BOLD_RED "ПРОИЗОШЛА ОШИБКА (^_-) \n\n" COLOR_RESET);
                 break;
         }
     return Square_Equation.amount_solution;
@@ -123,7 +124,7 @@ AmountSolutions Printing_solutions(const Equation Square_Equation) {
 
 void Printing_error_in_tests(bool is_correct_test, Equation Solved_Equation){
     if (!is_correct_test){
-            printf("ОШИБКА \n");
+            printf(COLOR_BOLD_RED "ОШИБКА \n" COLOR_RESET);
             Printing_equation(Solved_Equation);
             Printing_solutions(Solved_Equation);
         }
@@ -132,7 +133,7 @@ void Printing_error_in_tests(bool is_correct_test, Equation Solved_Equation){
 
 void Printing_error_with_ref(const Equation Ref_Equation, const Equation Prog_Equation){
     Printing_angry_emoji();
-    printf(BOLD_RED "ОШИБКА \n" RESET);
+    printf(COLOR_BOLD_RED "ОШИБКА \n" COLOR_RESET);
 
     Printing_equation(Ref_Equation);
 
@@ -145,24 +146,17 @@ void Printing_error_with_ref(const Equation Ref_Equation, const Equation Prog_Eq
 
 
 bool Chatting_about_file_testing(){
-    printf(BLUE "Сори, Бро, последний вопрос (⁄ ⁄>⁄ ▽ ⁄<⁄ ⁄) \n\n"
-               "Хочешь загрузить фаил с тестами? [Y/N] " RESET);
+    printf(COLOR_BOLD_PURPLE "Сори, Бро, последний вопрос (⁄ ⁄>⁄ ▽ ⁄<⁄ ⁄) \n" COLOR_RESET
+           COLOR_BLUE        "Хочешь загрузить фаил с тестами? [Y/N] "   COLOR_RESET);
 
     if (Is_yes()){
-        printf("\n" PINK
+        printf("\n" COLOR_PINK
                 "Просто ВАУ! Бро, ты лушчий пользователь, который юзает все фичи ( ´ ∀ `)ノ～ ♡  \n"
-                "Проверяю тесты из фаила tests.txt, мои тесты с краевыми случаями и сгенерированные тесты \n\n" RESET);
+                "Проверяю тесты из фаила tests.txt, мои тесты с краевыми случаями и сгенерированные тесты \n" COLOR_RESET);
         return true;
     }
 
-    printf("\n" RED
-           "Как говорится: баба с возу: кобыле легче..." RESET);
+    printf("\n" COLOR_RED
+           "Как говорится: баба с возу: кобыле легче..." COLOR_RESET);
     return false;
 }
-
-
-// void painting_function(const Equation Function){
-//     char canvas[20][20];
-// }
-
-

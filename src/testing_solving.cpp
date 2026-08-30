@@ -1,10 +1,9 @@
 #include "testing_solving.h"
 
 bool Starting_test(){
-    printf(BLUE "Хотите ли вы протестировать программу? [Y/N] " RESET);
+    printf(COLOR_BLUE "Хотите ли вы протестировать программу? [Y/N] " COLOR_RESET);
     if (Is_yes()){
-        printf("\n" BOLD_GREEN
-               "Хорошо! Запускаю тестирование... ＼(≧▽≦)／ \n\n" RESET);
+        printf(COLOR_BOLD_GREEN "Хорошо! Запускаю тестирование... ＼(≧▽≦)／ \n\n" COLOR_RESET);
 
         Running_tests_from_file();
         Running_all_hand_tests ();
@@ -13,8 +12,7 @@ bool Starting_test(){
         return true;
 
     } else {
-        printf("\n"
-               "Не больно-то и хотелось (￣ヘ￣) \n" RESET);
+        printf(COLOR_BOLD_YELLOW "Не больно-то и хотелось (￣ヘ￣) \n\n" COLOR_RESET);
 
         return false;
     }
@@ -34,7 +32,7 @@ void Running_tests_from_file(){
 
     if (ftests == NULL){
         Printing_angry_emoji();
-        printf(BOLD_RED "Ну ты и воздухан! Нет такого файла" RESET);
+        printf(COLOR_BOLD_RED "Ну ты и воздухан! Нет такого файла" COLOR_RESET);
         return;
     }
 
@@ -62,7 +60,7 @@ void Running_tests_from_file(){
 
     fclose(ftests);
 
-    printf("\n" BOLD_GREEN "Верных проверок из фаила %d из %d" RESET, correct_file_tests, amount__file_tests);
+    printf("\n" COLOR_BOLD_GREEN "Верных проверок из фаила %d из %d" COLOR_RESET, correct_file_tests, amount__file_tests);
 }
 
 
@@ -72,7 +70,7 @@ void Running_all_hand_tests() {
     for (int i = 0; i < AMOUNT_REF_TESTS; i++){
         correct_ref_tests += Running_hand_test(Ref_Book[i]);
     }
-    printf("\n" BOLD_GREEN "Верных ручных проверок %d из %d" RESET, correct_ref_tests, AMOUNT_REF_TESTS);
+    printf("\n" COLOR_BOLD_GREEN "Верных ручных проверок %d из %d" COLOR_RESET, correct_ref_tests, AMOUNT_REF_TESTS);
 
 }
 
@@ -114,7 +112,7 @@ void Running_generated_tests(int amount_generated_tests){
         correct_generated_tests += is_correct;
     }
 
-    printf(BOLD_GREEN "\n" "Верных сгенерированных тестов %d из %d \n" RESET,
+    printf(COLOR_BOLD_GREEN "\n" "Верных сгенерированных тестов %d из %d \n\n" COLOR_RESET,
             correct_generated_tests, amount_generated_tests);
 }
 
